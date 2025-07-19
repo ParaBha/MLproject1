@@ -1,8 +1,18 @@
 import os
 import sys
-from src.exception import CustomException
+from src.exception import Customexception
 from src.logger import logging
 import pandas as pd
+import os
+
+# Get the root directory (C:\projects)
+root_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+# Create the correct path to data.csv
+file_path = os.path.join(root_dir, "notebook", "data", "data.csv")
+
+print("Resolved file path:", file_path)
+
 
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
@@ -25,7 +35,7 @@ class DataIngestion:
     def initiate_data_ingestion(self):
         logging.info("Entered the data ingestion method or component")
         try:
-            df=pd.read_csv('notebook\data\stud.csv')
+            df=pd.read_csv(file_path)
             logging.info('Read the dataset as dataframe')
 
             os.makedirs(os.path.dirname(self.ingestion_config.train_data_path),exist_ok=True)
@@ -47,7 +57,7 @@ class DataIngestion:
 
             )
         except Exception as e:
-            raise CustomException(e,sys)
+            raise Customexception(e,sys)
         
 if __name__=="__main__":
     obj=DataIngestion()
